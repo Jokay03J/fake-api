@@ -1,34 +1,11 @@
 {
   "posts": [
     {
-      "title": "test 1",
-      "content": "content 01 modified !",
-      "image": "rowimage.png",
-      "slug": "test-1"
-    },
-    {
-      "title": "test 2",
-      "content": "content 02",
+      "title": "titre du post !",
+      "content": "content 01",
       "image": "image.png",
-      "slug": "test-2"
-    },
-    {
-      "title": "test 3",
-      "content": "content 03",
-      "image": "image.png",
-      "slug": "test-3"
-    },
-    {
-      "title": "test 4",
-      "content": "content 04",
-      "image": "image.png",
-      "slug": "test-4"
-    },
-    {
-      "title": "test 5",
-      "content": "content 05",
-      "image": "image.png",
-      "slug": "test-5"
+      "authorName": "jokay03J",
+      "slug": "titre-du-post-!"
     }
   ]
 }
