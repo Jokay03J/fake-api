@@ -15,6 +15,8 @@ route.get("/all", (req, res) => {
 
 route.get("/get", (req, res) => {
   const { query } = req.query;
+  if (!query)
+    return res.status(400).send({ error: true, message: "request malformed" });
   const postIndex = bdd.posts.findIndex((post) => post.slug === query);
   if (postIndex === -1) {
     return res.status(404).send({ error: true, message: "post not found" });
@@ -24,6 +26,8 @@ route.get("/get", (req, res) => {
 
 route.post("/create", (req, res) => {
   const { title, content, image, authorName } = req.body;
+  if (!title || !content || !image || !authorName)
+    return res.status(400).send({ error: true, message: "request malformed" });
 
   const slug = title.replaceAll(/[&\/\\#,+()$~%.'":*?<>{} ]/g, "-");
   if (bdd.posts.find((post) => post.slug === slug)) {
@@ -31,11 +35,13 @@ route.post("/create", (req, res) => {
   }
   bdd.posts.push({ title, content, image, authorName, slug });
   Savebdd(bdd);
-  res.json(bdd.posts);
+  res.status(201).send({ title, content, image, authorName });
 });
 
 route.delete("/delete", (req, res) => {
   const { query } = req.query;
+  if (!query)
+    return res.status(400).send({ error: true, message: "request malformed" });
   const isFound = bdd.posts.find((post) => post.slug === query);
   if (!isFound) {
     return res.status(404).send({ error: true, message: "post not found" });
@@ -46,18 +52,18 @@ route.delete("/delete", (req, res) => {
 });
 
 route.put("/put", (req, res) => {
-  const { title, content, image, authorName } = req.body;
+  const { title, content, image } = req.body;
   const { query } = req.query;
+  if (!title && !content && !image) return res.status(304).send();
   const postIndex = bdd.posts.findIndex((post) => post.slug === query);
   if (postIndex === -1) {
     return res.status(404).send({ error: true, message: "post not found" });
   }
   bdd.posts[postIndex] = {
+    ...bdd.posts[postIndex],
     title: title ? title : bdd.posts[postIndex].title,
     content: content ? content : bdd.posts[postIndex].content,
     image: image ? image : bdd.posts[postIndex].image,
-    authorName: authorName ? authorName : bdd.posts[postIndex].authorName,
-    slug: bdd.posts[postIndex].slug,
   };
   Savebdd(bdd);
   res.json(bdd.posts[postIndex]);
