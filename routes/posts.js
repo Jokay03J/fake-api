@@ -1,7 +1,9 @@
 const { Router } = require("express");
-const { Savebdd } = require("./dbFunction");
+const { Savebdd } = require("../utils/saveBdd");
 const route = Router();
 let bdd = require("../db/posts.json");
+const { getPostBySlug } = require("../utils/getPostBySlug");
+const { getPostsByAuthor } = require("../utils/getPostsByAuthor");
 
 route.get("/all", (req, res) => {
   let { limit, page } = req.query;
@@ -14,14 +16,37 @@ route.get("/all", (req, res) => {
 });
 
 route.get("/get", (req, res) => {
-  const { query } = req.query;
+  const { query, by } = req.query;
   if (!query)
     return res.status(400).send({ error: true, message: "request malformed" });
-  const postIndex = bdd.posts.findIndex((post) => post.slug === query);
-  if (postIndex === -1) {
-    return res.status(404).send({ error: true, message: "post not found" });
+
+  switch (by) {
+    case "slug":
+      getPostBySlug(bdd, query)
+        .then((post) => res.json(post))
+        .catch((err) =>
+          res.status(404).send({ error: true, message: err.message })
+        );
+      break;
+
+    case "author":
+      getPostsByAuthor(bdd, query)
+        .then((posts) => {
+          res.send({ posts, length: posts.length });
+        })
+        .catch((err) => {
+          res.status(404).send({ error: true, message: err.message });
+        });
+      break;
+
+    default:
+      getPostBySlug(bdd, query)
+        .then((post) => res.json(post))
+        .catch((err) =>
+          res.status(404).send({ error: true, message: err.message })
+        );
+      break;
   }
-  res.json(bdd.posts[postIndex]);
 });
 
 route.post("/create", (req, res) => {
@@ -33,7 +58,7 @@ route.post("/create", (req, res) => {
   if (bdd.posts.find((post) => post.slug === slug)) {
     return res.status(409).send({ error: true, message: "post already exist" });
   }
-  bdd.posts.push({ title, content, image, authorName, slug });
+  bdd.posts.unshift({ title, content, image, authorName, slug });
   Savebdd(bdd);
   res.status(201).send({ title, content, image, authorName });
 });
