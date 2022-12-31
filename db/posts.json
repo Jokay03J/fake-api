@@ -1,9 +1,23 @@
 {
   "posts": [
     {
-      "title": "titre du post !",
-      "content": "content 01",
+      "title": "test 3",
+      "content": "content 05",
       "image": "image.png",
+      "authorName": "jokay03J",
+      "slug": "test-3"
+    },
+    {
+      "title": "test 2",
+      "content": "content 05",
+      "image": "image.png",
+      "authorName": "jokay03J",
+      "slug": "test-2"
+    },
+    {
+      "title": "titre du post !",
+      "content": "content 01 modified",
+      "image": "rowimage.png",
       "authorName": "jokay03J",
       "slug": "titre-du-post-!"
     }

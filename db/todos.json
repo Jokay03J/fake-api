@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "name": "todo 3",
+      "completed": false,
+      "id": "b60853c2-eae4-48bc-9b64-4bfd68e4c1a4"
+    },
+    {
+      "name": "todo 2",
+      "completed": false,
+      "id": "15aa84d3-c56d-40d9-b5f2-d2f344347320"
+    },
+    {
+      "name": "todo 1",
+      "completed": false,
+      "id": "d21d02c1-c72e-4b59-8bd6-bf8321bbfee2"
+    }
+  ]
+}
