@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config(".env");
-const { postsRoute } = require("./routes/posts");
-const { todoListRoutes } = require("./routes/todoList");
+const { postsRouter } = require("./routes/posts");
+const { todoListRouter } = require("./routes/todoList");
+const { eShopRouter } = require("./routes/eShop");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -11,8 +12,9 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // routes
-app.use("/api/posts", postsRoute);
-app.use("/api/todos", todoListRoutes);
+app.use("/api/posts", postsRouter);
+app.use("/api/todos", todoListRouter);
+app.use("/api/shop", eShopRouter);
 
 app.listen(PORT, () => {
   console.log(`serveur ouvert sur le port ${PORT}`);
