@@ -105,5 +105,5 @@ router.put("/put", (req, res) => {
 });
 
 module.exports = {
-  todoListRoutes: router,
+  todoListRouter: router,
 };

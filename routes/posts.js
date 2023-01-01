@@ -127,5 +127,5 @@ route.put("/put", (req, res) => {
 });
 
 module.exports = {
-  postsRoute: route,
+  postsRouter: route,
 };
